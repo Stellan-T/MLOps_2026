@@ -65,14 +65,20 @@ python experiments/train.py --config experiments/configs/train_config.yaml
 ## Snellius setup
 ### Environment Setup on Snellius
 '''bash
+
 module load 2025
+
 module load Python/3.13.1-GCCcore-14.2.0
+
 python -m venv ~/mlops_env
+
 source ~/mlops_env/bin/activate
+
 pip install -r requirements.txt
 '''
 
 ### Additional
 '''bash
+
 pip install torch torchvision torchaudio --index-url https://downlaod.pytorch.org/whl/cu118
 '''
