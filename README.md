@@ -61,3 +61,11 @@ python experiments/train.py --config experiments/configs/train_config.yaml
 ├── pyproject.toml        # Config for Tools (Ruff, Pytest)
 └── setup.py              # Package installation script
 ```
+## Snellius setup
+'''bash
+module load 2025
+module load Python/3.13.1-GCCcore-14.2.0
+python -m venv ~/mlops_env
+source ~/mlops_env/bin/activate
+pip install -r requirements.txt
+'''

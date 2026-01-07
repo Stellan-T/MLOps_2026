@@ -5,3 +5,16 @@ experiments/results/
 .env
 .DS_Store
 *.egg-info/
+# Environments & data
+mlops_env/
+*.h5
+data/
+pcam/
+
+# slurm outputs
+slurm-*.out
+output_*.txt
+
+# Models
+*.pth
+checkpoints/
