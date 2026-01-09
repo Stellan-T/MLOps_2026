@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import Dict, Tuple
 
+import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms
 
