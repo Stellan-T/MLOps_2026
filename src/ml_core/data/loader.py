@@ -15,7 +15,8 @@ def get_dataloaders(config: Dict) -> Tuple[DataLoader, DataLoader]:
     """
     data_cfg = config["data"]
     base_path = Path(data_cfg["data_path"])
-
+    batch_size = data_cfg.get("batch_size", 32)
+    num_workers = data_cfg.get("num_workers", 4)
     # train_transform = ...
     # val_transform = ...
     train_transform = transforms.Compose([])
