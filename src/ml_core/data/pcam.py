@@ -44,6 +44,7 @@ class PCAMDataset(Dataset):
         image = self.x_data[idx]
         label = self.y_data[idx]
         # 2. Convert to uint8 (for PIL compatibility if using transforms)
+        image = np.nan_to_num(image, nan=0.0, posinf=255.0, neginf=0.0)
         image = np.clip(image, 0.0, 255.0).astype(np.uint8)
         image = torch.from_numpy(image)
         if image.ndim == 3:
