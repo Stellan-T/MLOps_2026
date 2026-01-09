@@ -17,21 +17,35 @@ class PCAMDataset(Dataset):
         self.y_path = Path(y_path)
         self.transform = transform
 
-        # TODO: Initialize dataset
         # 1. Check if files exist
+        if not self.x_path.exists():
+            raise FileNotFoundError(f"x_path not found: {self.x_path}")
+        if not self.y_path.exists():
+            raise FileNotFoundError(f"y_path not found: {self.y_path}")
         # 2. Open h5 files in read mode
-        pass
+        self.x_file = h5py.File(self.x_path, "r")
+        self.y_file = h5py.File(self.y_path, "r")
+        self.x_data = self.x_file['x']
+        self.y_data = self.y_file['y']
 
     def __len__(self) -> int:
-        # TODO: Return length of dataset
         # The dataloader will know hence how many batches to create
-        return 0
+        return len(self.x_data)
 
     def __getitem__(self, idx: int) -> Tuple[torch.Tensor, torch.Tensor]:
-        # TODO: Implement data retrieval
         # 1. Read data at idx
+        image = self.x_data[idx]
+        label = self.y_data[idx]
         # 2. Convert to uint8 (for PIL compatibility if using transforms)
+        image = np.clip(image, 0, 255).astype(np.uint8)
         # 3. Apply transforms if they exist
+        if self.transform:
+            image = self.transform(image)
+        else:
+            image = torch.from_numpy(image).float()
+            image = image.permute(2, 0, 1)
+            image = image / 255.0
         # 4. Return tensor image and label (as long)
-        
-        raise NotImplementedError("Implement __getitem__ in PCAMDataset")
+        label = torch.tensor(label, dtype=torch.long).squeeze()
+        return image, label
+
