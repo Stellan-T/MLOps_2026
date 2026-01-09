@@ -12,10 +12,11 @@ class PCAMDataset(Dataset):
     PatchCamelyon (PCAM) Dataset reader for H5 format.
     """
 
-    def __init__(self, x_path: str, y_path: str, transform: Optional[Callable] = None):
+    def __init__(self, x_path: str, y_path: str, transform: Optional[Callable] = None, filter_data=False):
         self.x_path = Path(x_path)
         self.y_path = Path(y_path)
         self.transform = transform
+        self.filter_data = filter_data
 
         # 1. Check if files exist
         if not self.x_path.exists():
@@ -28,6 +29,12 @@ class PCAMDataset(Dataset):
         self.x_data = self.x_file['x']
         self.y_data = self.y_file['y']
 
+        if self.filter_data:
+            means = self.x_data[...].mean(axis=(1, 2, 3))
+            lo, hi = np.percentile(means, [1, 99])
+            self.indices = np.where((means >= lo) & (mean <= hi))[0]
+        else:
+            self.indixes = np.arange(len(self.x_data))
     def __len__(self) -> int:
         # The dataloader will know hence how many batches to create
         return len(self.x_data)
