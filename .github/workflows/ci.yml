@@ -1,5 +1,4 @@
-yaml
-name: CI
+name: MLOps pipeline
 
 on:
   push:
