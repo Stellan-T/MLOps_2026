@@ -5,6 +5,7 @@ on:
     branches: [ main, dev ]
   pull_request:
     branches: [ main, dev ]
+  workflow_dispatch:
 
 jobs:
   tests:
@@ -17,16 +18,27 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
+          # kies een versie die ≥ je lokaal gebruikte versie is
+          python-version: "3.11"
 
-      - name: Install dependencies
+      - name: Install system packages (HDF5)
         run: |
-          pip install --upgrade pip
+          sudo apt-get update
+          sudo apt-get install -y libhdf5-dev
+
+      - name: Install project in editable mode
+        run: |
+          python -m pip install --upgrade pip
+          # leest dependencies uit pyproject.toml, incl. torch, torchvision, pytest, ruff, pre-commit
           pip install -e .
-          pip install pytest
-          pip install torch
-          pip install h5py
 
-      - name: Run tests
+      - name: Install extra test dependencies (if any)
         run: |
+          # veilig om nogmaals pytest te installeren
+          pip install pytest
+
+      - name: Run test suite
+        run: |
+          pytest tests/test_imports.py
+          pytest tests/test_model_shapes.py
           pytest tests/test_data_loader.py
