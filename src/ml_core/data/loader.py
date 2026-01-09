@@ -2,7 +2,7 @@ from pathlib import Path
 from typing import Dict, Tuple
 
 import torch
-from torch.utils.data import DataLoader
+from torch.utils.data import DataLoader, WeightedRandomSampler
 from torchvision import transforms
 
 from .pcam import PCAMDataset
