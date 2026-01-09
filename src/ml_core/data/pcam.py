@@ -32,7 +32,7 @@ class PCAMDataset(Dataset):
         if self.filter_data:
             means = self.x_data[...].mean(axis=(1, 2, 3))
             lo, hi = np.percentile(means, [1, 99])
-            self.indices = np.where((means >= lo) & (mean <= hi))[0]
+            self.indices = np.where((means >= lo) & (means <= hi))[0]
         else:
             self.indixes = np.arange(len(self.x_data))
     def __len__(self) -> int:
@@ -44,15 +44,15 @@ class PCAMDataset(Dataset):
         image = self.x_data[idx]
         label = self.y_data[idx]
         # 2. Convert to uint8 (for PIL compatibility if using transforms)
-        image = np.clip(image, 0, 255).astype(np.uint8)
+        image = np.clip(image, 0.0, 255.0).astype(np.uint8)
+        image = torch.from_numpy(image)
+        if image.ndim == 3:
+            image = image.permute (2, 0, 1)
+        image = image.float() / 255.0
         # 3. Apply transforms if they exist
         if self.transform:
             image = self.transform(image)
-        else:
-            image = torch.from_numpy(image).float()
-            image = image.permute(2, 0, 1)
-            image = image / 255.0
         # 4. Return tensor image and label (as long)
-        label = torch.tensor(label, dtype=torch.long).squeeze()
+        label = torch.from_numpy(label).long().squeeze()
         return image, label
 
