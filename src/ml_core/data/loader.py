@@ -51,7 +51,7 @@ def get_dataloaders(config: Dict) -> Tuple[DataLoader, DataLoader]:
     sampler = WeightedRandomSampler(
         weights=sample_weights,
         num_samples=len(sample_weights),
-        replacements=True,
+        replacement=True,
     )
     # TODO: Create DataLoaders
     # train_loader = ...
