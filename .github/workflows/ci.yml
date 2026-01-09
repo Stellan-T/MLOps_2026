@@ -31,12 +31,12 @@ jobs:
           python -m pip install --upgrade pip
           # leest dependencies uit pyproject.toml, incl. torch, torchvision, pytest, ruff, pre-commit
           pip install -e .
-
+          pip install h5py
       - name: Install extra test dependencies (if any)
         run: |
           # veilig om nogmaals pytest te installeren
           pip install pytest
-
+          
       - name: Run test suite
         run: |
           pytest tests/test_data_loader.py
