@@ -42,16 +42,13 @@ def get_dataloaders(config: Dict) -> Tuple[DataLoader, DataLoader]:
         transform=val_transform,
     )
 
-    labels = []
-    for _, y in train_ds:
-        labels.append(y.item())
-    labels = torch.tensor(labels, dtype=torch.long)
+    labels = torch.tensor([y.item() for _, y in train_ds], dtype=torch.long)
     class_counts = torch.bincount(labels)
     class_weights = 1.0 / class_counts.float()
     sample_weights = class_weights[labels]
     sampler = WeightedRandomSampler(
         weights=sample_weights,
-        num_samples=len(sample_weights),
+        num_samples=len(train_ds) * 4,
         replacement=True,
     )
     # TODO: Create DataLoaders
@@ -60,7 +57,7 @@ def get_dataloaders(config: Dict) -> Tuple[DataLoader, DataLoader]:
     train_loader = DataLoader(
         train_ds,
         batch_size=batch_size,
-        shuffle=True,
+        sampler=sampler,
         num_workers=num_workers,
         pin_memory=True,
     )
