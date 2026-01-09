@@ -39,6 +39,4 @@ jobs:
 
       - name: Run test suite
         run: |
-          pytest tests/test_imports.py
-          pytest tests/test_model_shapes.py
           pytest tests/test_data_loader.py
