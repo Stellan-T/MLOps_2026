@@ -17,19 +17,18 @@ class MLP(nn.Module):
         # TODO: Build the MLP architecture
         # If you are up to the task, explore other architectures or model types
         # Hint: Flatten -> [Linear -> ReLU -> Dropout] * N_layers -> Linear
-        c, h, w = input_shape
-        in_features = c * h * w
+        self.input_dum = input_shape[0] * input_shape[1] * input_shape[2]
         layers = []
-        for u in hidden_units:
-            layers.append(nn.Linear(in_features, u))
+        layers.append(nn.Flatten())
+        prev_dim = self.input_dim
+        for h in hidden_units:
+            layers.append(nn.Linear(prev_dim, h))
             layers.append(nn.ReLU())
             layers.append(nn.Dropout(dropout_rate))
-            in_features = u
-        layers.append(nn.Linear(in_features, num_classes))
+            prev_dim = h
+        layers.append(nn.Linear(prev_dim, num_classes))
         self.model = nn.Sequential(*layers)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # TODO: Implement forward pass
-        x = torch.flatten(x, start_dim=1)
-        out = self.model(x)
-        return out
+        return self.network(x)
