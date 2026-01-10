@@ -6,7 +6,7 @@ data:
   # TODO: download the dataset and set the relative path here
   data_path: "/scratch-shared/scur2385/surfdrive" 
   input_shape: [3, 96, 96]
-  batch_size: 32
+  batch_size: 64
   num_workers: 2
 
 model:
