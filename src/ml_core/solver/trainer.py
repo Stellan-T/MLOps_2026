@@ -42,7 +42,7 @@ class Trainer:
         # 3. Forward pass, Calculate Loss
         # 4. Backward pass, Optimizer step
         # 5. Track metrics (Loss, Accuracy, F1)
-        for images, labels in tqdm(dataloader, desc=f"Epoch {epoch_idx+1} [Train]"):
+        for batch_idx, (images, labels) in enumerate(tqdm(dataloader, desc=f"Epoch {epoch_idx+1} [Train]")):
             images, labels = images.to(self.device), labels.to(self.device)
             self.optimizer.zero_grad()
             outputs = self.model(images)
