@@ -31,4 +31,4 @@ class MLP(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         # TODO: Implement forward pass
-        return self.network(x)
+        return self.model(x)
