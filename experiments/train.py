@@ -40,7 +40,7 @@ def main(args):
         device=device,
         config=config,
     )
-    trainer.fit(train_loader, val_loader, epochs=config["training"]["epochs"])
+    trainer.fit(train_loader, val_loader)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Train a Simple MLP on PCAM")
