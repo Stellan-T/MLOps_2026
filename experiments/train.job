@@ -16,4 +16,4 @@ module load matplotlib/3.8.2-gfbf-2023b
 source ~/mlops_env/bin/activate
 cd ~/MLOps_2026
 
-python scripts/train.py --config configs/train_config.yaml
+python experiments/train.py --config experiments/configs/train_config.yaml
