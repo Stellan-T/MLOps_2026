@@ -9,7 +9,7 @@ The exact command i used was:
 **ssh [scur2385@snellius.surf.nl](mailto:scur2385@snellius.surf.nl)**  
 Then i was asked if i was sure to continue connecting and i entered yes, from which the following welcome message appeared (the screenshots are from the second time i entered it, which resulted in **NOT** getting the *continue connecting* question):  
 
-![1][assets/image1.png]
+![1](assets/image1.png)
 
 ![2][assets/image2.png]  
 
