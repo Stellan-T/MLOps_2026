@@ -8,7 +8,11 @@
 The exact command i used was:  
 **ssh [scur2385@snellius.surf.nl](mailto:scur2385@snellius.surf.nl)**  
 Then i was asked if i was sure to continue connecting and i entered yes, from which the following welcome message appeared (the screenshots are from the second time i entered it, which resulted in **NOT** getting the *continue connecting* question):  
-![][assets/image1.png]![][assets/image2.png]  
+
+![1][assets/image1.png]
+
+![2][assets/image2.png]  
+
 The first time I got connected to **int4**, the second time (from which the screenshots were) I got connected to **int6**. For any further questions I used the second one, so **int6**.
 
 I encountered no problems nor errors. In the process i used the following SSH version:  
@@ -135,7 +139,8 @@ PyTorch: 2.7.1+cu118
 CUDA available: True  
 GPU: NVIDIA A100-SXM4-40GB MIG 1g.5gb  
 Job completed  
-![][assets/image3.png]
+
+![3][assets/image3.png]
 
 In my run I experienced a UserWarning about NumPy:  
 UserWarning: Failed to initialize NumPy: No module named 'numpy'  
@@ -149,7 +154,8 @@ GPU: NVIDIA A100-SXM4-40GB MIG 1g.5gb
 Job completed  
 Which showed that it now did work as expected.  
 To make sure it ran successfully:  
-![][assets/image4.png]
+
+![5][assets/image4.png]
 
 The difference between Python on login node vs Batch job;  
 Running a python script directly on a login node uses shared interactive resources, which are meant for light tasks (file management, editing, and some quick tests).   
@@ -239,7 +245,9 @@ This way, the rest of the code only depends on what data/\_\_init\_\_.py exports
 If we were to directly import ml\_core.data.pcam, it would tie us to the file name and structure, which makes the refactoring more difficult.
 
 ***3\)***  
-![][image5.png]  
+
+![5][image5.png]  
+
 After installing the extra libraries mentioned in 1), everything worked smoothly and I passed the test in 8.3s.
 
 *Question 7:*  
@@ -307,7 +315,15 @@ Extreme waarden (incl. NaN/inf) worden geknipt en dan naar uint8 gecast, daarna 
 De dataset geeft tensors in vorm (C,H,W) en labels als long zonder extra dimensies. (zoals de test\_dataloader\_output\_logic verwacht).
 
 ***2\)***  
-![][assets/image6.png]![][assets/image7.png]![][assets/image8.png]![][assets/image9.png]  
+
+![6][assets/image6.png]
+
+![7][assets/image7.png]
+
+![8][assets/image8.png]
+
+![9][assets/image9.png]  
+
 I got multiple failures, multiple times. So this took a while to fix:
 
 1. TypeError: unexpected keyword arguments ‘filter\_data’
