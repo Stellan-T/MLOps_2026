@@ -11,7 +11,7 @@ Then i was asked if i was sure to continue connecting and i entered yes, from wh
 
 ![1](assets/image1.png)
 
-![2][assets/image2.png]  
+![2](assets/image2.png)
 
 The first time I got connected to **int4**, the second time (from which the screenshots were) I got connected to **int6**. For any further questions I used the second one, so **int6**.
 
@@ -140,7 +140,7 @@ CUDA available: True
 GPU: NVIDIA A100-SXM4-40GB MIG 1g.5gb  
 Job completed  
 
-![3][assets/image3.png]
+![3](assets/image3.png)
 
 In my run I experienced a UserWarning about NumPy:  
 UserWarning: Failed to initialize NumPy: No module named 'numpy'  
@@ -155,7 +155,7 @@ Job completed
 Which showed that it now did work as expected.  
 To make sure it ran successfully:  
 
-![5][assets/image4.png]
+![5](assets/image4.png)
 
 The difference between Python on login node vs Batch job;  
 Running a python script directly on a login node uses shared interactive resources, which are meant for light tasks (file management, editing, and some quick tests).   
@@ -246,7 +246,7 @@ If we were to directly import ml\_core.data.pcam, it would tie us to the file na
 
 ***3\)***  
 
-![5][image5.png]  
+![5](image5.png)
 
 After installing the extra libraries mentioned in 1), everything worked smoothly and I passed the test in 8.3s.
 
@@ -316,13 +316,13 @@ De dataset geeft tensors in vorm (C,H,W) en labels als long zonder extra dimensi
 
 ***2\)***  
 
-![6][assets/image6.png]
+![6](assets/image6.png)
 
-![7][assets/image7.png]
+![7](assets/image7.png)
 
-![8][assets/image8.png]
+![8](assets/image8.png)
 
-![9][assets/image9.png]  
+![9](assets/image9.png)  
 
 I got multiple failures, multiple times. So this took a while to fix:
 
@@ -354,7 +354,7 @@ After all these changes and failures and fixes, the test ran and passed the test
 
 ***3\)***  
 I added a .github/worksflow/ci.yml file to test. (but i must admit that i used some GenAI to help making this file, as i had no idea what to include)  
-![][assets/image10.png]  
+![](assets/image10.png)
 This also took some time, as the GenAI couldn’t understand that i needed to include ALL libraries, so had to add those all manually. After I added these (and fixed the NaN issue I ran into) the test succeeded in 2minutes time.  
 That’s also why I think the failure in the CI could happen, opposed to local tests, as you need to include all libraries that are used in this specific file, otherwise the tests won’t run/differ from local tests.
 
@@ -369,7 +369,7 @@ Each sample from a “rare” class gets a higher weight, so it would get picked
 1: example patches: 1 completely black patch, 1 dark patch, 1 light patch. Shows that some patches don’t have useful information.  
 2: mean-patch-intensity: for a random subset of, for example in this case, 3000 samples, it shows the mean pixel intensity. With peaks around 0 and 1, indicating completely black/white pixels. And a big bulk at medium intensities.  
 3: label distribution: shows a strong class imbalance, class 0 has way more samples than class 1\.  
-![][assets/image11.png]![][assets/image12.png]![][assets/image13.png]
+![11](assets/image11.png)![12](assets/image12.png)![13](assets/image13.png)
 
 *Question 8:*  
 ***1\)***  
@@ -399,7 +399,7 @@ python experiments/[train.py](http://train.py) –config experiments/configs/tra
 The job then ran on node ***gcn9.***
 
 ***2\)***  
-![][assets/image14.png]![][assets/image15.png]  
+![14](assets/image14.png)![15](assets/image15.png)  
 The training loss curve looks healthy, with the loss decreasing from around 0.69 to around 0.60 over the 3 epochs. Which shows that the model is learning.
 
 Validation loss is stable at around 0.614 for the first two epochs, but then increases slightly to around 0.630, which could mean an early stage of overfitting or just an error in the code/plot generation.
