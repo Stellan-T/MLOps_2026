@@ -28,7 +28,7 @@ class Trainer:
         # TODO: Initialize ExperimentTracker
         self.train_losses = []
         self.val_losses = []
-        
+        self.log_every = config["training"].get("log_every", 50)
         # TODO: Initialize metric calculation (like accuracy/f1-score) if needed
 
     def train_epoch(self, dataloader: DataLoader, epoch_idx: int) -> Tuple[float, float, float]:
@@ -53,10 +53,14 @@ class Trainer:
             _, predicted = outputs.max(1)
             total += labels.size(0)
             correct += predicted.eq(labels).sum().item()
-        avg_loss = running_loss / len(dataloader)
+            if (batch_idx + 1) % self.log_every ==0:    
+                avg_loss = running_loss / self.log_every
+                self.train_losses.append(avg_loss)
+                logger.info(f"Epoch {epoch_idx+1} Step: {batch_idx+1}, Loss: {avg_loss:.4f}")
+                running_loss = 0.0
         accuracy = 100.0 * correct / total
-        logger.info(f"Epoch {epoch_idx+1} Train loss: {avg_loss:.4f}, Accuracy: {accuracy:.2f}%")
-        return avg_loss
+        logger.info(f"Epoch {epoch_idx+1} Train Accuracy: {accuracy:.2f}%")
+        return accuracy
 
     def validate(self, dataloader: DataLoader, epoch_idx: int) -> Tuple[float, float, float]:
         self.model.eval()
@@ -93,16 +97,19 @@ class Trainer:
     def save_plot(self) -> None:
         save_dir = Path(self.config["training"]["save_dir"])
         save_dir.mkdir(parents=True, exist_ok=True)
-        plt.figure(figsize=(10,5))
-        plt.plot(range(1, len(self.train_losses) + 1), self.train_losses, label="Train Loss")
-        plt.plot(range(1, len(self.val_losses) + 1), self.val_losses, label="Val Loss")
-        plt.xlabel("Epoch")
-        plt.ylabel("Loss")
-        plt.title("Training and Validation Loss")
-        plt.legend()
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 5))
+        ax1.plot(range(1, len(self.train_losses) + 1), self.train_losses)
+        ax1.set_xlabel(f"Step (every {self.log_every} batches)")
+        ax1.set_ylabel("Loss")
+        ax1.set_title("Training Loss (per step)")
+        ax2.plot(range(1, len(self.val_losses) + 1), self.val_losses, 'o-')
+        ax2.set_xlabel("Epoch")
+        ax2.set_ylabel("Loss")
+        ax2.set_title("Validation Loss (per epoch)")
+        plt.tight_layout()
         plt.savefig(save_dir / "loss_curve.png")
         plt.close()
-        logger.info(f"Saved loss curce to {save_dir / 'loss_curve.png'}")
+        logger.info(f"Saved loss curve to {save_dir / 'loss_curve.png'}")
 
     def fit(self, train_loader: DataLoader, val_loader: DataLoader) -> None:
         epochs = self.config["training"]["epochs"]
@@ -113,10 +120,8 @@ class Trainer:
             # TODO: Call train_epoch and validate
             # TODO: Log metrics to tracker
             # TODO: Save checkpoints
-            train_loss = self.train_epoch(train_loader, epoch)
+            self.train_epoch(train_loader, epoch)
             val_loss = self.validate(val_loader, epoch)
-            self.train_losses.append(train_loss)
-            self.val_losses.append(val_loss)
             self.save_checkpoint(epoch, val_loss)
         self.save_plot()
         logger.info("Training complete.")
