@@ -8,7 +8,7 @@
 The exact command i used was:  
 **ssh [scur2385@snellius.surf.nl](mailto:scur2385@snellius.surf.nl)**  
 Then i was asked if i was sure to continue connecting and i entered yes, from which the following welcome message appeared (the screenshots are from the second time i entered it, which resulted in **NOT** getting the *continue connecting* question):  
-![][image1]![][image2]  
+![][assets/image1]![][assets/image2]  
 The first time I got connected to **int4**, the second time (from which the screenshots were) I got connected to **int6**. For any further questions I used the second one, so **int6**.
 
 I encountered no problems nor errors. In the process i used the following SSH version:  
@@ -135,7 +135,7 @@ PyTorch: 2.7.1+cu118
 CUDA available: True  
 GPU: NVIDIA A100-SXM4-40GB MIG 1g.5gb  
 Job completed  
-![][image3]
+![][assets/image3]
 
 In my run I experienced a UserWarning about NumPy:  
 UserWarning: Failed to initialize NumPy: No module named 'numpy'  
@@ -149,7 +149,7 @@ GPU: NVIDIA A100-SXM4-40GB MIG 1g.5gb
 Job completed  
 Which showed that it now did work as expected.  
 To make sure it ran successfully:  
-![][image4]
+![][assets/image4]
 
 The difference between Python on login node vs Batch job;  
 Running a python script directly on a login node uses shared interactive resources, which are meant for light tasks (file management, editing, and some quick tests).   
@@ -307,7 +307,7 @@ Extreme waarden (incl. NaN/inf) worden geknipt en dan naar uint8 gecast, daarna 
 De dataset geeft tensors in vorm (C,H,W) en labels als long zonder extra dimensies. (zoals de test\_dataloader\_output\_logic verwacht).
 
 ***2\)***  
-![][image6]![][image7]![][image8]![][image9]  
+![][assets/image6]![][assets/image7]![][assets/image8]![][assets/image9]  
 I got multiple failures, multiple times. So this took a while to fix:
 
 1. TypeError: unexpected keyword arguments ‘filter\_data’
@@ -338,7 +338,7 @@ After all these changes and failures and fixes, the test ran and passed the test
 
 ***3\)***  
 I added a .github/worksflow/ci.yml file to test. (but i must admit that i used some GenAI to help making this file, as i had no idea what to include)  
-![][image10]  
+![][assets/image10]  
 This also took some time, as the GenAI couldn’t understand that i needed to include ALL libraries, so had to add those all manually. After I added these (and fixed the NaN issue I ran into) the test succeeded in 2minutes time.  
 That’s also why I think the failure in the CI could happen, opposed to local tests, as you need to include all libraries that are used in this specific file, otherwise the tests won’t run/differ from local tests.
 
@@ -353,7 +353,7 @@ Each sample from a “rare” class gets a higher weight, so it would get picked
 1: example patches: 1 completely black patch, 1 dark patch, 1 light patch. Shows that some patches don’t have useful information.  
 2: mean-patch-intensity: for a random subset of, for example in this case, 3000 samples, it shows the mean pixel intensity. With peaks around 0 and 1, indicating completely black/white pixels. And a big bulk at medium intensities.  
 3: label distribution: shows a strong class imbalance, class 0 has way more samples than class 1\.  
-![][image11]![][image12]![][image13]
+![][assets/image11]![][assets/image12]![][assets/image13]
 
 *Question 8:*  
 ***1\)***  
@@ -383,7 +383,7 @@ python experiments/[train.py](http://train.py) –config experiments/configs/tra
 The job then ran on node ***gcn9.***
 
 ***2\)***  
-![][image14]![][image15]  
+![][assets/image14]![][assets/image15]  
 The training loss curve looks healthy, with the loss decreasing from around 0.69 to around 0.60 over the 3 epochs. Which shows that the model is learning.
 
 Validation loss is stable at around 0.614 for the first two epochs, but then increases slightly to around 0.630, which could mean an early stage of overfitting or just an error in the code/plot generation.
