@@ -17,7 +17,7 @@ class MLP(nn.Module):
         # TODO: Build the MLP architecture
         # If you are up to the task, explore other architectures or model types
         # Hint: Flatten -> [Linear -> ReLU -> Dropout] * N_layers -> Linear
-        self.input_dum = input_shape[0] * input_shape[1] * input_shape[2]
+        self.input_dim = input_shape[0] * input_shape[1] * input_shape[2]
         layers = []
         layers.append(nn.Flatten())
         prev_dim = self.input_dim
