@@ -1,6 +1,6 @@
 from pathlib import Path
 from typing import Dict, Tuple
-
+import h5py
 import torch
 from torch.utils.data import DataLoader, WeightedRandomSampler
 from torchvision import transforms
@@ -42,13 +42,14 @@ def get_dataloaders(config: Dict) -> Tuple[DataLoader, DataLoader]:
         transform=val_transform,
     )
 
-    labels = torch.tensor([y.item() for _, y in train_ds], dtype=torch.long)
+    with h5py.File(str(y_train_path), 'r') as f:
+        labels = torch.tensor(f['y'][:].flatten(), dtype=torch.long)
     class_counts = torch.bincount(labels)
     class_weights = 1.0 / class_counts.float()
     sample_weights = class_weights[labels]
     sampler = WeightedRandomSampler(
         weights=sample_weights,
-        num_samples=len(train_ds) * 4,
+        num_samples=len(train_ds),
         replacement=True,
     )
     # TODO: Create DataLoaders
